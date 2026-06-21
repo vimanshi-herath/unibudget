@@ -1,3 +1,5 @@
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "../services/firebase";
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../services/firebase";
 import {
@@ -8,7 +10,10 @@ import {
   updateProfile,
 } from "firebase/auth";
 
+
 const AuthContext = createContext();
+
+
 
 export function useAuth() {
   return useContext(AuthContext);
@@ -18,11 +23,29 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  function register(email, password, name) {
-    return createUserWithEmailAndPassword(auth, email, password).then((res) =>
-      updateProfile(res.user, { displayName: name })
-    );
-  }
+async function register(email, password, name) {
+  const result = await createUserWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
+
+  await updateProfile(result.user, {
+    displayName: name,
+  });
+
+  await setDoc(
+    doc(db, "users", result.user.uid),
+    {
+      uid: result.user.uid,
+      name,
+      email,
+      createdAt: serverTimestamp(),
+    }
+  );
+
+  return result;
+}
 
   function login(email, password) {
     return signInWithEmailAndPassword(auth, email, password);
