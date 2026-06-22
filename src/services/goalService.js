@@ -1,36 +1,20 @@
 import { db } from "./firebase";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  updateDoc,
-  deleteDoc,
-  doc,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, where } from "firebase/firestore";
 
-const COL = "goals";
-
-addGoal()
-getGoals()
-updateGoal()
-deleteGoal()
-
-export async function addGoal(data) {
-  return addDoc(collection(db, COL), data);
+export async function getGoals(uid) {
+  const q = query(collection(db, "goals"), where("userId", "==", uid));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
 }
 
-export async function getGoals(userId) {
-  const q = query(collection(db, COL), where("userId", "==", userId));
-  const snap = await getDocs(q);
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+export async function addGoal(data) {
+  return await addDoc(collection(db, "goals"), data);
 }
 
 export async function updateGoal(id, data) {
-  return updateDoc(doc(db, COL, id), data);
+  return await updateDoc(doc(db, "goals", id), data);
 }
 
 export async function deleteGoal(id) {
-  return deleteDoc(doc(db, COL, id));
+  return await deleteDoc(doc(db, "goals", id));
 }

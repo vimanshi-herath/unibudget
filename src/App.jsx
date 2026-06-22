@@ -1,4 +1,4 @@
-/*import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Navbar from "./components/Navbar";
@@ -54,21 +54,6 @@ export default function App() {
             <ProtectedRoute><AppLayout><Profile /></AppLayout></ProtectedRoute>
           } />
           <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
-  );
-}*/
-
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
-
-export default function App() {
-  return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<div style={{color:"white", background:"navy", padding:"40px"}}>AuthProvider works!</div>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
