@@ -11,7 +11,12 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const { register } = useAuth();
   const navigate = useNavigate();
-
+  const [confirmPassword,setConfirmPassword] = useState("");
+ if(password !== confirmPassword){
+ return setError(
+  "Passwords do not match"
+  );
+}
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
@@ -70,12 +75,11 @@ export default function Register() {
           <div className="relative">
             <FiLock className="absolute left-3 top-3.5 text-slate-400" />
             <input
-              type="password"
-              placeholder="Password (min 6 chars)"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full bg-dark border border-border rounded-lg pl-10 pr-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-primary"
+             type="password"
+             placeholder="Confirm Password"
+             value={confirmPassword}
+             onChange={(e)=>
+             setConfirmPassword(e.target.value)}
             />
           </div>
 
@@ -97,5 +101,6 @@ export default function Register() {
         </p>
       </div>
     </div>
+   
   );
 }

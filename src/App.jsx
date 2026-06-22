@@ -1,10 +1,9 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+/*import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
-//import ProtectedRoute from "./routes/ProtectedRouter";
+import ProtectedRoute from "./routes/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 
-// Pages
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -36,7 +35,6 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-
           <Route path="/dashboard" element={
             <ProtectedRoute><AppLayout><Dashboard /></AppLayout></ProtectedRoute>
           } />
@@ -55,8 +53,22 @@ export default function App() {
           <Route path="/profile" element={
             <ProtectedRoute><AppLayout><Profile /></AppLayout></ProtectedRoute>
           } />
-
           <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
+}*/
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<div style={{color:"white", background:"navy", padding:"40px"}}>AuthProvider works!</div>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

@@ -12,6 +12,11 @@ import {
 
 const COL = "goals";
 
+addGoal()
+getGoals()
+updateGoal()
+deleteGoal()
+
 export async function addGoal(data) {
   return addDoc(collection(db, COL), data);
 }

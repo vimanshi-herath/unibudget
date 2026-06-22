@@ -1,36 +1,14 @@
 import { db } from "./firebase";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  updateDoc,
-  deleteDoc,
-  doc,
-  query,
-  where,
-  orderBy,
-} from "firebase/firestore";
+import { collection, addDoc, getDocs, deleteDoc, doc, query, where } from "firebase/firestore";
 
-const COL = "transactions";
-
+export async function getTransactions(uid) {
+  const q = query(collection(db, "transactions"), where("uid", "==", uid));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+}
 export async function addTransaction(data) {
-  return addDoc(collection(db, COL), data);
+  return await addDoc(collection(db, "transactions"), data);
 }
-
-export async function getTransactions(userId) {
-  const q = query(
-    collection(db, COL),
-    where("userId", "==", userId),
-    orderBy("date", "desc")
-  );
-  const snap = await getDocs(q);
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-}
-
-export async function updateTransaction(id, data) {
-  return updateDoc(doc(db, COL, id), data);
-}
-
 export async function deleteTransaction(id) {
-  return deleteDoc(doc(db, COL, id));
+  return await deleteDoc(doc(db, "transactions", id));
 }

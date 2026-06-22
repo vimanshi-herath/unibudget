@@ -10,6 +10,11 @@ import {
   where,
 } from "firebase/firestore";
 
+addBudget()
+getBudgets()
+updateBudget()
+deleteBudget()
+
 const COL = "budgets";
 
 export async function addBudget(data) {
